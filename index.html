@@ -1,51 +1,119 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Report</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moo-in Project Details</title>
+
+<!-- 기존 스타일 -->
+<link rel="stylesheet" href="assets/css/style.css" />
+
+<style>
+  body {
+    margin: 0;
+    background: white;
+  }
+
+  .scale-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background: white;
+    overflow: hidden;
+    height: 100vh;
+    overflow-y: visible;
+  }
+
+  .scaled-content {
+    transform-origin: top center;
+    width: 1440px; /* 디자인 기준 해상도 */
+    transition: transform 0.3s ease;
+    position: relative;
+  }
+
+  /* 기존 WebGL 영역 스타일 오버라이드 */
+  #hero3d {
+    width: 1176px;
+    height: 706px;
+    position: absolute;
+    left: 132px;
+    top: 258px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ececf1;
+  }
+</style>
 </head>
+
 <body>
-  <nav class="nav">
-    <div class="logo">MOON-IN</div>
-    <div class="menu">
-      <span>Team</span><span>Service</span><strong>Project details</strong><span>Main</span>
-    </div>
-    <a class="login" href="#">Log in →</a>
-  </nav>
-
-  <div class="wrapper">
-    <h1 class="title">Report</h1>
-
-    <!-- 위 '큰 이미지' 자리에만 3D가 나타남 -->
-    <section class="hero" aria-label="project-hero">
-      <div id="hero3d">
-        <div class="placeholder">3D loads here</div>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="left card">
-        <div class="meta">
-          <div class="k">Project</div><div class="v">Tranquil Retreat Bailey - House</div>
-          <div class="k">Location</div><div class="v">San Francisco, CA 94132</div>
-          <div class="k">Area</div><div class="v">120 m²</div>
-          <div class="k">Completed</div><div class="v">2023</div>
+  <div class="scale-wrapper">
+    <div class="scaled-content" id="scaled-content">
+      <div style="width: 1440px; height: 4021px; position: relative; background: white; overflow: hidden">
+        
+        <!-- 헤더 -->
+        <div style="width: 1440px; height: 60px; position: absolute; left: 0; top: 0; background: white;">
+          <img style="width: 139px; height: 40px; left: 132px; top: 10px; position: absolute"
+               src="https://placehold.co/139x40" />
+          <div style="position: absolute; left: 788px; top: 18px; display: flex; gap: 24px; font-family: Inter; font-size: 14px;">
+            <div>Team</div>
+            <div>Service</div>
+            <div style="font-weight:700;">Project details</div>
+            <div>Main</div>
+          </div>
+          <div style="width: 140px; height: 60px; left: 1168px; top: 0; position: absolute; background: #151ED2; color: white; display: flex; align-items: center; justify-content: center; font-size: 14px; font-family: Inter; font-weight: 400;">
+            Log in →
+          </div>
         </div>
-        <p style="margin-top:16px; line-height:1.6; color:#374151;">
-          The owners wanted a new family home that is flexible to cater to the future changes in family requirements –
-          a joyful abode at all stages in life. The owners wanted a new family home that is flexible to cater to the future
-          changes in family requirements – a joyful abode at all stages in life.
-        </p>
-        <a class="btn" href="#">In detail</a>
+
+        <!-- 3D WebGL 영역 -->
+        <div id="hero3d">
+          <div class="placeholder">Loading 3D...</div>
+        </div>
+
+        <!-- 아래 정보 섹션 -->
+        <div style="position: absolute; top: 1000px; left: 132px; width: 1176px;">
+          <div style="font-size: 48px; font-family: Archivo; font-weight: 600; margin-bottom: 32px;">Report</div>
+          
+          <div style="display: flex; gap: 80px;">
+            <div>
+              <div style="font-family: Inter; font-size: 14px;">
+                <div>Project: <b>Tranquil Retreat Bailey - House</b></div>
+                <div>Location: <b>San Francisco, CA 94132</b></div>
+                <div>Area: <b>120 m²</b></div>
+                <div>Completed: <b>2023</b></div>
+              </div>
+              <p style="margin-top:20px; line-height:1.6; color:#424955; width:400px;">
+                The owners wanted a new family home that is flexible to cater to future changes in family requirements —
+                a joyful abode at all stages in life.
+              </p>
+              <div class="btn" style="margin-top:20px;">In detail</div>
+            </div>
+
+            <img src="https://placehold.co/627x410" style="border-radius: 8px;" />
+          </div>
+        </div>
+
+        <!-- 푸터 -->
+        <div style="width: 1440px; height: 345px; left: 0px; top: 3676px; position: absolute; background: #151ED2; color:white; display:flex; align-items:center; justify-content:center; font-family:Inter;">
+          <div>© 2025 MOO-IN, Inc. | Privacy | Terms</div>
+        </div>
       </div>
-      <div class="right">
-        <div class="thumb">Static image placeholder</div>
-      </div>
-    </section>
+    </div>
   </div>
 
+  <script>
+    // 반응형 스케일 유지
+    function updateScale() {
+      const baseWidth = 1440;
+      const currentWidth = window.innerWidth;
+      const scale = currentWidth / baseWidth;
+      document.getElementById("scaled-content").style.transform = `scale(${scale})`;
+    }
+    window.addEventListener("resize", updateScale);
+    window.addEventListener("load", updateScale);
+  </script>
+
+  <!-- Three.js 실행 -->
   <script type="module" src="assets/js/main.js"></script>
 </body>
 </html>
